@@ -4,3 +4,9 @@ p b {
 p {
 	color:gray;
 }
+html {
+	cursor: url(drone.png), auto;
+}
+p:hover{
+	cursor: url(hover-click.gif) auto;
+}
