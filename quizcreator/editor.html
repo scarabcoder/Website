@@ -1,0 +1,151 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel='stylesheet', type='text/css', href='template.css'>
+    <link rel='stylesheet', type='text/css', href='editor.css'>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <title>Dashboard - Quiz Creator</title>
+  </head>
+
+  <body>
+
+    <div id="navbar">
+      <p id="logo">QuizCreator</p>
+      <ul id="navlinks">
+        <a href="#"><li id="here">Dashboard</li></a>
+        <a href="#"><li>Quizzes</li></a>
+        <a href="#"><li>About</li></a>
+      </ul>
+    </div>
+    <div id="body">
+      <div id="page">
+        <form id="question-form">
+          <input type="submit" id="save" value="Save">
+          <input id="name" type="text" placeholder="Name">
+          <div id="questions">
+            <div class="question-page">
+                <input class="question" type="text" placeholder="What is your favorite flavor of ice cream?">
+                <div class="answers">
+                  <ul>
+                    <li class="answer">
+                      <input type="checkbox">
+
+                      <input type="text" placeholder="Vanilla">
+
+                      <i onclick="removeElement(this);" class="fa fa-trash-o options" aria-hidden="true"></i>
+                      <select class="type">
+                        <option value="" disabled selected>Select type</option>
+                        <option value="product1">Product 1</option>
+                        <option value="product2">Product 2</option>
+                      </select>
+                    </li>
+                  </ul>
+                  <div class="add add-answer" onclick="addoption(this);">Add Option +</div>
+                </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="add add-question" onclick="addpage();">
+          Add Page +
+        </div>
+
+      </div>
+
+    </div>
+    <script>
+      var saved = true;
+      function removeElement(element){
+        $(element.parentElement).remove();
+      }
+
+      var time = 10;
+
+      function doSecond(){
+        time--;
+        if(time == 0){
+          toggleSaved();
+          saveData();
+        }
+      }
+
+      function saveData() {
+
+      }
+
+
+      $("question-form").submit(function(e){
+        console.log("Yeah")
+        console.log($("question-form").serialize())
+      })
+
+
+      setInterval(doSecond, 1000)
+
+      $("input").keypress(function(){
+        time = 10;
+        setSaved(false)
+      });
+      function toggleSaved() {
+        setSaved(saved)
+      }
+
+      function setSaved(bool){
+        var element = $("#save");
+        if(bool){
+          element.addClass("saved");
+          element.html("Saved");
+          saved = false;
+        }else{
+          saved = true;
+          element.removeClass("saved");
+          element.html("Save");
+        }
+      }
+
+      function addoption(page){
+        $(page.parentElement).find("ul").append(`<li class="answer">
+          <input type="checkbox">
+
+          <input type="text" placeholder="Vanilla">
+
+          <i onclick="removeElement(this);" class="fa fa-trash-o options" aria-hidden="true"></i>
+          <select class="type">
+            <option value="" disabled selected>Select type</option>
+            <option value="product1">Product 1</option>
+            <option value="product2">Product 2</option>
+          </select>
+        </li>`)
+      }
+
+      function addpage(){
+        $("#questions").append(`
+          <div class="question-page">
+            <form>
+              <input class="question" type="text" placeholder="What is your favorite flavor of ice cream?">
+              <div class="answers">
+                <ul>
+                  <li class="answer">
+                    <input type="checkbox">
+
+                    <input type="text" placeholder="Vanilla">
+
+                    <i onclick="removeElement(this);" class="fa fa-trash-o options" aria-hidden="true"></i>
+                    <select class="type">
+                      <option value="" disabled selected>Select type</option>
+                      <option value="product1">Product 1</option>
+                      <option value="product2">Product 2</option>
+                    </select>
+                  </li>
+                </ul>
+                <div class="add add-answer" onclick="addoption(this);">Add Option +</div>
+              </div>
+            </form>
+          </div>
+          `)
+      }
+
+    </script>
+  </body>
+
+</html>
